@@ -1,0 +1,51 @@
+addpath('./provided_code/');
+framesdir = './frames/';
+siftdir = './sift/';
+
+fnames = dir([siftdir '/*.mat']);
+
+fnames_vector = randperm(6612, 25); %6612 is the number of images in fnames and 450 distinct images are randomly picked
+
+feature_matrix = [];
+
+for i = 1:25
+    fname = [siftdir '/' fnames(fnames_vector(i)).name];
+    load(fname, 'descriptors');
+    feature_matrix= [feature_matrix; descriptors];
+end
+
+[membership,means,rms] = kmeansML(1500,transpose(feature_matrix));
+
+x = randperm(size(means,2),2);
+words = means(:,x);
+words = transpose(words);
+
+fnames_vector_2 = randperm(6612,25);
+
+for i = 1:25 %looking at 25 random images
+    fname = [siftdir '/' fnames(fnames_vector(i)).name];
+    load(fname, 'imname', 'descriptors', 'positions', 'scales', 'orients');
+    word_distance = dist2(words, descriptors);
+    [~,word1_min_distance] = min(word_distance(:,1));
+    impath = [framesdir '/' imname];
+    im = imread(impath);
+    im = rgb2gray(im);
+    patch = getPatchFromSIFTParameters(positions(word1_min_distance,:),scales( word1_min_distance), orients(word1_min_distance), im);
+    subplot(5,5,i);
+    imshow(patch);
+end
+
+fnames_vector_3 = randperm(6612,25);
+
+for i = 1:25 %looking at 25 random images
+    fname = [siftdir '/' fnames(fnames_vector(i)).name];
+    load(fname, 'imname', 'descriptors', 'positions', 'scales', 'orients');
+    word_distance = dist2(words, descriptors);
+    [~,word1_min_distance] = min(word_distance(:,1));
+    impath = [framesdir '/' imname];
+    im = imread(impath);
+    im = rgb2gray(im);
+    patch = getPatchFromSIFTParameters(positions(word1_min_distance,:),scales( word1_min_distance), orients(word1_min_distance), im);
+    subplot(5,5,i);
+    imshow(patch);
+end
