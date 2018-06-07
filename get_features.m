@@ -1,5 +1,5 @@
 function [Features] = get_features(sift_dir, train_size)
-%CREATE_FEATURES Summary of this function goes here
+%GET_FEATURES Summary of this function goes here
 %   Detailed explanation goes here
     fnames = dir([sift_dir '/*.mat']);
     num_feats = length(fnames);
@@ -12,7 +12,5 @@ function [Features] = get_features(sift_dir, train_size)
         load(fname, 'descriptors');
         Features= [Features; descriptors];
     end
-    save('features.mat', 'features');
+    save('Features.mat', 'Features');
 end
-
-s
