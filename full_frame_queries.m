@@ -16,7 +16,6 @@ siftdir_index = randperm(num_feats,1);
 load('Histograms.mat');
 
 score = []; 
-ind = [];
 M=5;
 
 f1 = figure;

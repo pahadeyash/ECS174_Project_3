@@ -38,7 +38,7 @@ new_bincount = histc(min_ind, 1:m);
 
 score = [];
 
-for i=1:m
+for i=1:num_feats
     if i ~= rand_frame
         bincounts_temp = Histograms(i,:);
         result = dot(new_bincount, bincounts_temp) / (norm(new_bincount) * norm(bincounts_temp));
