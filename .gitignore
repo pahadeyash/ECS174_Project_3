@@ -1,4 +1,4 @@
 frames
 sift
-raw_descriptor_matches.m~
+*.m~
 .DS_Store
